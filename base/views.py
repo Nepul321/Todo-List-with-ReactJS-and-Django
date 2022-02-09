@@ -1,3 +1,4 @@
+from re import T
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import (
@@ -22,8 +23,22 @@ def TodosDetailView(request, id):
     objects = Todo.objects.filter(completed=False)
     qs = objects.filter(id=id)
     if not qs:
-        return Response({"detail" : "Todo not found"})
+        return Response({"detail" : "Todo not found"}, status=404)
     obj = qs.first()
     serializer = TodoSerializer(obj)
+    data = serializer.data
+    return Response(data, status=200)
+
+@api_view(['POST'])
+def TodosUpdateView(request, id):
+    data = request.data
+    objects = Todo.objects.filter(completed=False)
+    qs = objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Todo not found"}, status=404)
+    obj = qs.first()
+    serializer = TodoSerializer(instance=obj, data=data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
     data = serializer.data
     return Response(data, status=200)
