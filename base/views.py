@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
-# Create your views here.
+@api_view(['GET'])
+def APIBaseView(request):
+    return Response("API BASE POINT", status=200)
