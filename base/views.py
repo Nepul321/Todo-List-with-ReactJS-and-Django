@@ -13,15 +13,14 @@ def APIBaseView(request):
 
 @api_view(['GET'])
 def TodosListView(request):
-    qs = Todo.objects.filter(completed=False)
+    qs = Todo.objects.all()
     serializer = TodoSerializer(qs, many=True)
     data = serializer.data
     return Response(data, status=200)
 
 @api_view(['GET'])
 def TodosDetailView(request, id):
-    objects = Todo.objects.filter(completed=False)
-    qs = objects.filter(id=id)
+    qs = Todo.objects.filter(id=id)
     if not qs:
         return Response({"detail" : "Todo not found"}, status=404)
     obj = qs.first()
@@ -32,8 +31,7 @@ def TodosDetailView(request, id):
 @api_view(['POST'])
 def TodosUpdateView(request, id):
     data = request.data
-    objects = Todo.objects.filter(completed=False)
-    qs = objects.filter(id=id)
+    qs = Todo.objects.filter(id=id)
     if not qs:
         return Response({"detail" : "Todo not found"}, status=404)
     obj = qs.first()
@@ -42,3 +40,13 @@ def TodosUpdateView(request, id):
     serializer.save()
     data = serializer.data
     return Response(data, status=200)
+
+@api_view(['DELETE'])
+def TodosDeleteView(request, id):
+    qs = Todo.objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Todo not found"}, status=404)
+
+    obj = qs.first()
+    obj.delete()
+    return Response({"detail" : "Todo deleted"}, status=200)
