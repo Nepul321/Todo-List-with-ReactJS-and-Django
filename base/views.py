@@ -36,10 +36,11 @@ def TodosUpdateView(request, id):
         return Response({"detail" : "Todo not found"}, status=404)
     obj = qs.first()
     serializer = TodoSerializer(instance=obj, data=data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    data = serializer.data
-    return Response(data, status=200)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        data = serializer.data
+        return Response(data, status=200)
+    return Response({}, status=401)
 
 @api_view(['DELETE'])
 def TodosDeleteView(request, id):
@@ -50,3 +51,13 @@ def TodosDeleteView(request, id):
     obj = qs.first()
     obj.delete()
     return Response({"detail" : "Todo deleted"}, status=200)
+
+@api_view(['POST'])
+def TodosCreateView(request):
+    data = request.data
+    serializer = TodoSerializer(data=data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        data = serializer.data
+        return Response(data, status=200)
+    return Response({}, status=401)

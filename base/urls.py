@@ -3,7 +3,8 @@ from .views import (
   TodosListView,
   TodosDetailView,
   TodosUpdateView,
-  TodosDeleteView
+  TodosDeleteView,
+  TodosCreateView
 )
 
 from django.urls import path
@@ -14,4 +15,5 @@ urlpatterns = [
     path('todos/<int:id>/', TodosDetailView, name="todos-detail-view"),
     path('todos/<int:id>/update/', TodosUpdateView, name="todos-update-view"),
     path('todos/<int:id>/delete/', TodosDeleteView, name="todos-delete-view"),
+    path('todos/create/', TodosCreateView, name="todos-create-view"),
 ]
