@@ -16,3 +16,14 @@ def TodosListView(request):
     serializer = TodoSerializer(qs, many=True)
     data = serializer.data
     return Response(data, status=200)
+
+@api_view(['GET'])
+def TodosDetailView(request, id):
+    objects = Todo.objects.filter(completed=False)
+    qs = objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Todo not found"})
+    obj = qs.first()
+    serializer = TodoSerializer(obj)
+    data = serializer.data
+    return Response(data, status=200)
