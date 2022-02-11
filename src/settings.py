@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -124,10 +124,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_URLS_REGEX = r"^/api/.*$"
-
 DEFAULT_RENDERER_CLASSES = [
        'rest_framework.renderers.JSONRenderer',
 ]
@@ -141,6 +137,11 @@ if DEBUG:
 REST_FRAMEWORK = {
    "DEFAULT_RENDERER_CLASSES" : DEFAULT_RENDERER_CLASSES
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
