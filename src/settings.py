@@ -124,12 +124,23 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_URLS_REGEX = r"^/api/.*$"
 
+DEFAULT_RENDERER_CLASSES = [
+       'rest_framework.renderers.JSONRenderer',
+]
+
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES += [
+        'rest_framework.renderers.BrowsableAPIRenderer', 
+        
+    ]
+
+REST_FRAMEWORK = {
+   "DEFAULT_RENDERER_CLASSES" : DEFAULT_RENDERER_CLASSES
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
