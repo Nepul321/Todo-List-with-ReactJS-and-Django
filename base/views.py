@@ -58,5 +58,5 @@ def TodosCreateView(request):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         data = serializer.data
-        return Response(data, status=200)
+        return Response(data, status=201)
     return Response({}, status=401)

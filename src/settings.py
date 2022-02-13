@@ -124,6 +124,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static'
+    ]
+
 DEFAULT_RENDERER_CLASSES = [
        'rest_framework.renderers.JSONRenderer',
 ]
