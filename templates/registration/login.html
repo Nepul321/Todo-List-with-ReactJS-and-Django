@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if not user.is_authenticated %}
+Login
+{% endif %}
+{% endblock title %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+<div class="container my-5">
+    <h1>Login</h1>
+    <form action="" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endif %}
+{% endblock content %}

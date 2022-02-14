@@ -30,6 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
 
 # Application definition
 
@@ -133,6 +137,10 @@ DEFAULT_RENDERER_CLASSES = [
        'rest_framework.renderers.JSONRenderer',
 ]
 
+DEFAULT_AUTHENTICATION_CLASSES = [
+    'rest_framework.authentication.SessionAuthentication',
+]
+
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer', 
@@ -140,6 +148,7 @@ if DEBUG:
     ]
 
 REST_FRAMEWORK = {
+   "DEFAULT_AUTHENTICATION_CLASSES" : DEFAULT_AUTHENTICATION_CLASSES,
    "DEFAULT_RENDERER_CLASSES" : DEFAULT_RENDERER_CLASSES
 }
 
